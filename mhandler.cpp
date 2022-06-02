@@ -17,8 +17,8 @@ const char *TEXTG_ASCII_ART =
 
 struct SaveData{
 	const char *pname;
+	int maxHP, hp, armour, stamina, money, level;
 	std::vector<Weapon> weapons;
-	int hp, ar, st;
 };
 
 /* MainHandler method definitions */
@@ -52,11 +52,27 @@ MainHandler::Run(){
 	bool shouldQuit = false;
 
 	while(!shouldQuit){
-		std::cout << "What do you want to do? (n)ext battle, (m)enu, (q)uit\n: ";
+		std::cout << "What do you want to do?\n(n)ext battle, (c)haracter info, (s)ave, (q)uit\n: ";
 		std::getline(std::cin, userInput);
+		std::cout << '\n';
 
-		if(userInput == "q"){
+		if(userInput[0] == 'n'){
+			DoBattle();
+		}
+		if(userInput[0] == 'c'){
+			std::cout <<
+				"Name: " << sd->pname << '\n' <<
+				"Health: (" << sd->hp << " / " << sd->maxHP << ")\n" <<
+				"Armour: " << sd->armour << '\n' <<
+				"Stamina: " << sd->stamina << "\n\n"
+			;
+		}
+		if(userInput[0] == 's'){
+			UpdateSave();
+		}
+		if(userInput[0] == 'q'){
 			shouldQuit = true;
+			continue;
 		}
 	}
 }
@@ -69,10 +85,16 @@ MainHandler::ReadSave(){
 void
 MainHandler::CreateSave(){
 	std::cout << "So farm this only sets player name lol\n";
-	sd = new SaveData{"player", {}, 3, 0, 2};
+	sd = new SaveData{"player", 3, 2, 0, 2, 0, 0, {}};
 }
 
 void
 MainHandler::UpdateSave(){
 	std::cout << "Saved..?\n";
+}
+
+void
+MainHandler::DoBattle(){
+	std::cout << "On level " << sd->level << '\n';
+	sd->level++;
 }

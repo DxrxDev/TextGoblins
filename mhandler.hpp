@@ -22,5 +22,7 @@ private:
 	void CreateSave();
 	void UpdateSave();
 
+	void DoBattle();
+
 	SaveData *sd;
 };
